@@ -1,0 +1,39 @@
+/* Sayfa boyunca card'ı ortalamak için container */
+.edit-container {
+    display: flex;
+    justify-content: center;  /* Yatayda ortalar */
+    align-items: center;      /* Dikeyde ortalar */
+    height: 100vh;            /* Ekran yüksekliğini kapsar */
+    background-color: #f4f4f4; /* Arka plan rengi */
+  }
+  
+  /* Card'ın stili */
+  .edit-card {
+    width: 400px;             /* Card'ın genişliği */
+    padding: 24px;            /* İçerik için padding */
+    border-radius: 12px;      /* Köşeleri yuvarlak yapar */
+    background: #ffffff;      /* Beyaz arka plan */
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);  /* Hafif gölge */
+  }
+  
+  /* Formun tüm genişliği kapsaması */
+  .edit-form {
+    width: 100%;
+  }
+  
+  /* Form öğelerinin arasındaki boşluk */
+  .edit-form .ant-form-item {
+    margin-bottom: 16px;
+  }
+  
+  /* Butonlar arasında boşluk oluşturmak ve yatayda düzenlemek */
+  .edit-buttons {
+    display: flex;
+    justify-content: space-between; /* Butonları yatayda yaymak */
+  }
+  
+  /* Her iki butonun genişliği eşit */
+  .edit-buttons button {
+    width: 48%;  /* Her butonun genişliği %48, birbirinden yeterince uzak */
+  }
+  
