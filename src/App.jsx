@@ -7,6 +7,8 @@ import PrivateRoute from './components/auth/PrivateRoute';
 import DataTable from './components/Table';
 import AppLayout from './components/SidebarHeader';
 import Edit from './components/auth/Edit';
+import CredentialsPage from './components/Credentials';
+import VCenterPage from './components/Vcenter';
 
 import { Container, Typography, Box } from '@mui/material';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
@@ -47,6 +49,26 @@ function App() {
     </>
   }
 />
+          <Route
+            path="/credentials"
+            element={
+              <>
+                <AppLayout> 
+                      <CredentialsPage />
+                </AppLayout>
+              </>
+            }
+          />
+          <Route
+            path="/vcenters"
+            element={
+              <>
+                <AppLayout> 
+                      <VCenterPage />
+                </AppLayout>
+              </>
+            }
+          />
             <Route path="/edit" element={<Edit />} />
 
 
