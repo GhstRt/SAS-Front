@@ -25,7 +25,7 @@ const CredentialsPage = () => {
 
   const addCredential = async () => {
     try {
-      await axios.post("http://localhost:8000/api/add-credentials/", newCredential);
+      await axios.post("http://localhost:8000/api/add-credential/", newCredential);
       fetchCredentials();
       setIsModalOpen(false);
     } catch (error) {

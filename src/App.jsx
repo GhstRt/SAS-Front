@@ -12,6 +12,8 @@ import VCenterPage from './components/Vcenter';
 
 import { Container, Typography, Box } from '@mui/material';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
+import VcenterDetail from './components/VcenterDetail';
+import { ViewCarousel } from '@mui/icons-material';
 
 const theme = createTheme({
   palette: {
@@ -69,6 +71,15 @@ function App() {
               </>
             }
           />
+          <Route
+            path="/vcenter/:uuid"
+            element={
+              <AppLayout> 
+                <VcenterDetail />
+              </AppLayout>
+            }
+          />
+
             <Route path="/edit" element={<Edit />} />
 
 

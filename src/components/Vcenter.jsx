@@ -101,7 +101,7 @@ const VCenterPage = () => {
           <Button type="primary" onClick={() => discoveryVCenter(record.id)}>
             Discovery
           </Button>
-          <Button type="default" href={`/vcenter-detail/${record.id}`}>
+          <Button type="default" href={`/vcenter/${record.id}`}>
             Detay
           </Button>
         </Space>

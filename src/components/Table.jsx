@@ -79,7 +79,39 @@ const TableComponent = () => {
     setEditingKey(key);
   };
 
-  const handleSave = () => {
+  const handleSave = async (record) => {
+    console.log(record)
+    try {
+      // Güncellenecek veriyi hazırlıyoruz
+      const updatedData = {
+          HOSTNAME: record.HOSTNAME,  // Örneğin, isim alanı varsa
+          AIM_OF_USE: record.AIM_OF_USE, // Örneğin, durum bilgisi
+          CONSOLE_IP: record.CONSOLE_IP,
+          CORE: record.CORE,
+          CLUSTER_NAME: record.CLUSTER_NAME,
+          UPDATE_CYCLE: record.UPDATE_CYCLE,
+          DOMINO_NO: record.DOMINO_NO,
+          HOSTED_ON: record.HOSTED_ON,
+          IP_ADDRESS: record.IP_ADDRESS,
+          MEMORY: record.MEMORY,
+          OS: record.OS,
+          POWER_STATE: record.POWER_STATE,
+          RESOURCE_TYPE: record.RESOURCE_TYPE,
+          RESPONSIBLE_GROUP: record.RESPONSIBLE_GROUP,
+          VCENTER_ID: record.VCENTER_ID // Örneğin, IP adresi varsa
+          // Diğer güncellenmesi gereken alanlar
+      };
+
+      const response = await axios.patch(`http://127.0.0.1:8000/api/update-server/${record.key}/`, updatedData, {
+          headers: {
+              'Content-Type': 'application/json',
+          },
+      });
+
+      console.log("Başarıyla güncellendi:", response.data);
+  } catch (error) {
+      console.error("Güncelleme hatası:", error.response ? error.response.data : error.message);
+  }
     setEditingKey(null);
   };
 
@@ -126,10 +158,10 @@ const TableComponent = () => {
     }
   ));
 
-  columns = columns.sort((a, b) => (a.key === "OS_HOSTNAME" ? -1 : b.key === "OS_HOSTNAME" ? 1 : 0));
+  columns = columns.sort((a, b) => (a.key === "AIM_OF_USE" ? -1 : b.key === "AIM_OF_USE" ? 1 : 0));
 
   columns = columns.map((col) =>
-    col.key === "OS_HOSTNAME" ? { ...col, fixed: "left" } : col
+    col.key === "AIM_OF_USE" ? { ...col, fixed: "left" } : col
   );
 
   columns.push({
@@ -139,7 +171,7 @@ const TableComponent = () => {
     render: (_, record) => (
       <div style={{ display: "flex", gap: "8px" }}>
         {editingKey === record.key ? (
-          <Button type="primary" onClick={() => handleSave(record.key)}>
+          <Button type="primary" onClick={() => handleSave(record)}>
             Kaydet
           </Button>
         ) : (
@@ -166,6 +198,7 @@ const TableComponent = () => {
           columns={columns}
           dataSource={servers}
           loading={loading}
+          size="small"
           pagination={{
             showSizeChanger: true,
             pageSizeOptions: ["5", "10", "20", "50"],
