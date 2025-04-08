@@ -7,8 +7,17 @@ import {
   LogoutOutlined,
   LeftOutlined,
   RightOutlined,
+  CloudServerOutlined,
+  HistoryOutlined,
+  LinuxOutlined,
+  WindowsOutlined,
+  AppleOutlined,
+  KeyOutlined,
+  GlobalOutlined,
+  AppstoreAddOutlined
 } from "@ant-design/icons";
 import { Table, Typography, Tag } from "antd";
+import logo from '../assets/logo.png';
 import axios from "axios";
 import { useNavigate } from "react-router-dom"; // React Router'dan useNavigate import edildi
 
@@ -18,11 +27,54 @@ const AppLayout = ({ children }) => {
   const [collapsed, setCollapsed] = useState(false);
   const navigate = useNavigate();
 
-  const menuItems = [
-    { key: "1", icon: <HomeOutlined />, label: "Servers" },
-    { key: "2", icon: <SettingOutlined />, label: "Credentials" },
-    { key: "3", icon: <SettingOutlined />, label: "Vcenters" },
-  ];
+
+const menuItems = [
+  {
+    icon: <HomeOutlined />,
+    label: "Servers",
+    children: [
+      {key: "1", label: "All", icon: <GlobalOutlined />},
+      {
+        key: "1-1",
+        label: "Virtual",
+        children: [
+          { key: "1-1", label: "All", icon: <GlobalOutlined /> },
+          { key: "1-1-1", label: "Windows", icon: <WindowsOutlined /> },
+          { key: "1-1-2", label: "Unix", icon: <LinuxOutlined /> },
+          { key: "1-1-3", label: "Mac", icon: <AppleOutlined /> },
+        ],
+      },
+      {
+        key: "1-2",
+        label: "Physical",
+        children: [
+          { key: "1-2-4", label: "New Server", icon: <AppstoreAddOutlined /> },
+          { key: "1-2", label: "All", icon: <GlobalOutlined /> },
+          { key: "1-2-1", label: "Windows", icon: <WindowsOutlined /> },
+          { key: "1-2-2", label: "Unix", icon: <LinuxOutlined /> },
+          { key: "1-2-3", label: "Mac", icon: <AppleOutlined /> },
+          
+        ],
+      },
+    ],
+  },
+  {
+    icon: <SettingOutlined />,
+    label: "Settings",
+    children: [
+      { key: "2-1", icon: <KeyOutlined />, label: "Credentials" },
+      { key: "2-2", icon: <CloudServerOutlined />, label: "vCenters" },
+    ]
+  },
+  {
+    icon: <CloudServerOutlined />,
+    label: "vCenter Operations",
+    children: [
+       { key: "3-1", icon: <HistoryOutlined />, label: "Snapshots"}
+    ] 
+  }
+];
+
 
   const handleLogout = () => {
     console.log("Çıkış yapıldı");
@@ -55,16 +107,48 @@ const AppLayout = ({ children }) => {
   }, []);
 
   const handleMenuClick = (key) => {
-    if (key === "1") {
-      navigate("/"); // Anasayfa'ya yönlendir
-    } else if (key === "2") {
-      navigate("/credentials"); // Ayarlar sayfasına yönlendir
-    }
-    else if (key === "3") {
-      navigate("/vcenters"); // Ayarlar sayfasına yönlendir
+    switch (key) {
+      case "1":
+        navigate("/servers");
+        break;
+      case "1-1":
+        navigate("/servers/virtual/all");
+        break;
+      case "1-1-1":
+        navigate("/servers/virtual/windows");
+        break;
+      case "1-1-2":
+        navigate("/servers/virtual/unix");
+        break;
+      case "1-1-3":
+        navigate("/servers/virtual/mac");
+        break;
+      case "1-2":
+        navigate("/servers/physical/all");
+        break;
+      case "1-2-1":
+        navigate("/servers/physical/windows");
+        break;
+      case "1-2-2":
+        navigate("/servers/physical/unix");
+        break;
+      case "1-2-3":
+        navigate("/servers/physical/mac");
+        break;
+      case "1-2-4":
+        navigate("/servers/physical/add");
+        break;
+      case "2-1":
+        navigate("/credentials");
+        break;
+      case "2-2":
+        navigate("/vcenters");
+        break;
+      default:
+        break;
     }
   };
-
+  
   const columns = [
     { title: "Job ID", dataIndex: "id", key: "id" },
     { title: "Job Name", dataIndex: "name", key: "name" },
@@ -79,6 +163,7 @@ const AppLayout = ({ children }) => {
   return (
     <Layout style={{ minHeight: "100vh" }}>
       <Sider
+      width={250}
         collapsed={collapsed}
         onCollapse={setCollapsed}
         breakpoint="md"
@@ -86,7 +171,7 @@ const AppLayout = ({ children }) => {
       >
         
         <div style={{ padding: "16px", textAlign: "center" }}>
-          <img src={collapsed ? "/logo-min.png" : "/logo.png" } alt="Logo" style={{ maxWidth: "100%", height: "auto" }} />
+          <img src={logo } alt="Logo" style={{ maxWidth: "100%", height: "auto" }} />
         </div>
         <Menu theme="dark" mode="inline" items={menuItems} onClick={(e) => handleMenuClick(e.key)} />        <Menu theme="dark" mode="inline" style={{ position: "absolute", bottom: 0, width: "100%" }}>
           <Menu.Item key="logout" icon={<LogoutOutlined />} onClick={handleLogout}>
@@ -95,19 +180,19 @@ const AppLayout = ({ children }) => {
         </Menu>
       </Sider>
       <Layout style={{ flex: 1 }}>
-        <Header style={{ display: "flex", justifyContent: "space-between", alignItems: "center", background: "#fff", width: collapsed ? "100vw" : "calc(100vw - 200px)" }}>
+        <Header style={{ display: "flex", justifyContent: "space-between", alignItems: "center", background: "#fff", width: collapsed ? "100vw" : "calc(100vw - 270px)" }}>
           <Button type="text" icon={collapsed ? <RightOutlined /> : <LeftOutlined />} onClick={() => setCollapsed(!collapsed)} />
           <Dropdown overlay={profileMenu} trigger={["click"]}>
             <Avatar style={{ cursor: "pointer" }} icon={<UserOutlined />} />
           </Dropdown>
         </Header>
-        <Content style={{ background: "#fff", minHeight: "calc(100vh - 400px)", width: collapsed ? "100vw" : "calc(100vw - 200px)" }}>
+        <Content style={{ background: "#fff", minHeight: "calc(100vh - 400px)", width: collapsed ? "100vw" : "calc(100vw - 270px)" }}>
           {children}
         </Content>
-      <div style={{ background: "#fff", width: collapsed ? "100vw" : "calc(100vw - 200px)" }}>
-        <Table columns={columns}  dataSource={jobs} rowKey="id" pagination={false} />
+      <div style={{ background: "#fff", width: collapsed ? "100vw" : "calc(100vw - 270px)"}}>
+        <Table columns={columns}  dataSource={jobs} rowKey="id" pagination={false}  />
         </div>
-        <Footer style={{ textAlign: "center", background: "#f0f2f5", padding: "10px", width: collapsed ? "100vw" : "calc(100vw - 200px)" }}>
+        <Footer style={{ textAlign: "center", background: "#f0f2f5", padding: "10px", width: collapsed ? "100vw" : "calc(100vw - 270px)" }}>
           © {new Date().getFullYear()} Tüm Hakları Saklıdır
         </Footer>
       </Layout>

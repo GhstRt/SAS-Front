@@ -75,6 +75,15 @@ const VCenterPage = () => {
     }
   };
 
+  const discoverySnapshots = async (id) => {
+    try {
+      await axios.get(`http://localhost:8000/api/explore-snapshot-from-vcenter/${id}/`);
+      fetchVCenters();
+    } catch (error) {
+      console.error("Error editing vcenter:", error);
+    }
+  };
+
   const columns = [
     { title: "Name", dataIndex: "name", key: "name" },
     { title: "URL", dataIndex: "url", key: "url" },
@@ -100,6 +109,9 @@ const VCenterPage = () => {
           </Button>
           <Button type="primary" onClick={() => discoveryVCenter(record.id)}>
             Discovery
+          </Button>
+          <Button type="primary" onClick={() => discoverySnapshots(record.id)}>
+            Discovery Snapshots
           </Button>
           <Button type="default" href={`/vcenter/${record.id}`}>
             Detay

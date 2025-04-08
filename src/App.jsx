@@ -9,6 +9,9 @@ import AppLayout from './components/SidebarHeader';
 import Edit from './components/auth/Edit';
 import CredentialsPage from './components/Credentials';
 import VCenterPage from './components/Vcenter';
+import FilterTable from './components/OsTable';
+import TypeTable from './components/TypeTable';
+import AddPhysicalServer from './components/AddPhysicalServer';
 
 import { Container, Typography, Box } from '@mui/material';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
@@ -42,15 +45,45 @@ function App() {
           <Route path="/reset-password/:token" element={<ResetPassword />} />
           <Route path="/table" element={<DataTable />} />
           <Route
-  path="/"
-  element={
-    <>
-      <AppLayout> 
-            <DataTable />
-      </AppLayout>
-    </>
-  }
-/>
+            path="/servers"
+            element={
+              <>
+                <AppLayout> 
+                      <DataTable />
+                </AppLayout>
+              </>
+            }
+          />
+          <Route
+            path="/"
+            element={
+              <>
+                <AppLayout> 
+                      <DataTable />
+                </AppLayout>
+              </>
+            }
+          />
+          <Route
+            path="/servers/type/:type"
+            element={
+              <>
+                <AppLayout> 
+                      <TypeTable />
+                </AppLayout>
+              </>
+            }
+          />
+          <Route
+            path="/servers/:type/:os"
+            element={
+              <>
+                <AppLayout> 
+                      <FilterTable />
+                </AppLayout>
+              </>
+            }
+          />
           <Route
             path="/credentials"
             element={
@@ -76,6 +109,14 @@ function App() {
             element={
               <AppLayout> 
                 <VcenterDetail />
+              </AppLayout>
+            }
+          />
+          <Route
+            path="/servers/physical/add"
+            element={
+              <AppLayout> 
+                <AddPhysicalServer />
               </AppLayout>
             }
           />
