@@ -9,9 +9,10 @@ import AppLayout from './components/SidebarHeader';
 import Edit from './components/auth/Edit';
 import CredentialsPage from './components/Credentials';
 import VCenterPage from './components/Vcenter';
-import FilterTable from './components/OsTable';
+import FilterTable from './components/FilterTable';
 import TypeTable from './components/TypeTable';
 import AddPhysicalServer from './components/AddPhysicalServer';
+import SnapshotTable from './components/SnapshotTable';
 
 import { Container, Typography, Box } from '@mui/material';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
@@ -117,6 +118,14 @@ function App() {
             element={
               <AppLayout> 
                 <AddPhysicalServer />
+              </AppLayout>
+            }
+          />
+          <Route
+            path="/vcenter/snapshots"
+            element={
+              <AppLayout> 
+                <SnapshotTable />
               </AppLayout>
             }
           />

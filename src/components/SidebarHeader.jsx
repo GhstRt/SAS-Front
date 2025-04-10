@@ -144,6 +144,9 @@ const menuItems = [
       case "2-2":
         navigate("/vcenters");
         break;
+      case "3-1":
+        navigate("/vcenter/snapshots");
+        break;
       default:
         break;
     }
