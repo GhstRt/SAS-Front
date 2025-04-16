@@ -17,11 +17,17 @@ const FilterTable = () => {
 
   useEffect(() => {
     fetchServers();
-  }, [type, os]);
+  }, [os]);
 
   const fetchServers = async () => {
     try {
-      const response = await axios.get(`http://127.0.0.1:8000/api/get-servers-by-filter/${type}/${os}/`);
+      let response = "";
+      if (os === undefined) {
+        response = await axios.get(`http://127.0.0.1:8000/api/get-servers-by-filter/virtual/all/`);
+      }
+      else {
+        response = await axios.get(`http://127.0.0.1:8000/api/get-servers-by-filter/virtual/${os}/`);
+      }
       if (response.data.status.code === 0) {
         const formattedData = response.data.data.map((item) => ({
           key: item.id,
@@ -82,43 +88,55 @@ const FilterTable = () => {
   };
 
   const handleSave = async (record) => {
-    console.log(record)
     try {
       // Güncellenecek veriyi hazırlıyoruz
       const updatedData = {
-          HOSTNAME: record.HOSTNAME,  // Örneğin, isim alanı varsa
-          AIM_OF_USE: record.AIM_OF_USE, // Örneğin, durum bilgisi
-          CONSOLE_IP: record.CONSOLE_IP,
-          CORE: record.CORE,
-          CLUSTER_NAME: record.CLUSTER_NAME,
-          UPDATE_CYCLE: record.UPDATE_CYCLE,
-          DOMINO_NO: record.DOMINO_NO,
-          HOSTED_ON: record.HOSTED_ON,
-          IP_ADDRESS: record.IP_ADDRESS,
-          MEMORY: record.MEMORY,
-          OS: record.OS,
-          POWER_STATE: record.POWER_STATE,
-          RESOURCE_TYPE: record.RESOURCE_TYPE,
-          RESPONSIBLE_GROUP: record.RESPONSIBLE_GROUP,
-          VCENTER_ID: record.VCENTER_ID // Örneğin, IP adresi varsa
-          // Diğer güncellenmesi gereken alanlar
+        //HOSTNAME: record.HOSTNAME,  // Örneğin, isim alanı varsa
+        AIM_OF_USE: record.AIM_OF_USE, // Örneğin, durum bilgisi
+        //CONSOLE_IP: record.CONSOLE_IP,
+        //CORE: record.CORE,
+        //CLUSTER_NAME: record.CLUSTER_NAME,
+        COMPANY: record.COMPANY,
+        UPDATE_CYCLE: record.UPDATE_CYCLE,
+        DOMINO_NO: record.DOMINO_NO,
+        //HOSTED_ON: record.HOSTED_ON,
+        //IP_ADDRESS: record.IP_ADDRESS,
+        //MEMORY: record.MEMORY,
+        //TOTAL_DISK: record.TOTAL_DISK,
+        //OS: record.OS,
+        //POWER_STATE: record.POWER_STATE,
+        //RESOURCE_TYPE: record.RESOURCE_TYPE,
+        RESPONSIBLE_GROUP: record.RESPONSIBLE_GROUP,
+        //VCENTER_ID: record.VCENTER_ID // Örneğin, IP adresi varsa
+        // Diğer güncellenmesi gereken alanlar
       };
 
-      const response = await axios.patch(`http://127.0.0.1:8000/api/update-server/${record.key}/`, updatedData, {
-          headers: {
-              'Content-Type': 'application/json',
-          },
+      const response = await axios.put(`http://127.0.0.1:8000/api/update-server/${record.key}/`, updatedData, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
       });
 
       console.log("Başarıyla güncellendi:", response.data);
-  } catch (error) {
+    } catch (error) {
       console.error("Güncelleme hatası:", error.response ? error.response.data : error.message);
-  }
+    }
     setEditingKey(null);
   };
 
-  const handleDelete = (key) => {
+  const handleDelete = async (key) => {
     setServers(servers.filter(item => item.key !== key));
+    try {
+      const response = await axios.delete(`http://127.0.0.1:8000/api/delete-server/${key}/`, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      console.log("Başarıyla silindi:", response.data);
+    } catch (error) {
+      console.error("Silme hatası:", error.response ? error.response.data : error.message);
+    }
   };
 
   const handleChange = (key, dataIndex, value) => {
@@ -157,7 +175,7 @@ const FilterTable = () => {
       );
     },
     ...getColumnSearchProps(key), // **Arama filtresi eklendi**
-    }
+  }
   ));
 
   columns = columns.sort((a, b) => (a.key === "AIM_OF_USE" ? -1 : b.key === "AIM_OF_USE" ? 1 : 0));

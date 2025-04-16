@@ -14,7 +14,8 @@ import {
   AppleOutlined,
   KeyOutlined,
   GlobalOutlined,
-  AppstoreAddOutlined
+  AppstoreAddOutlined,
+  DeleteOutlined
 } from "@ant-design/icons";
 import { Table, Typography, Tag } from "antd";
 import logo from '../assets/logo.png';
@@ -70,7 +71,8 @@ const menuItems = [
     icon: <CloudServerOutlined />,
     label: "vCenter Operations",
     children: [
-       { key: "3-1", icon: <HistoryOutlined />, label: "Snapshots"}
+       { key: "3-1", icon: <HistoryOutlined />, label: "Snapshots"},
+       { key: "3-2", icon: <DeleteOutlined />, label: "Deleted Servers"}
     ] 
   }
 ];
@@ -146,6 +148,9 @@ const menuItems = [
         break;
       case "3-1":
         navigate("/vcenter/snapshots");
+        break;
+      case "3-2":
+        navigate("/vcenter/deleted");
         break;
       default:
         break;

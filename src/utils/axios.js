@@ -51,6 +51,12 @@ axios.interceptors.response.use(
 // Her istekte token'ı header'a ekle
 axios.interceptors.request.use(
   (config) => {
+    // Refresh token isteği yapılıyorsa, Authorization header'ı eklememek için kontrol et
+    if (config.url && config.url.includes('/api/token/refresh/')) {
+      return config; // Refresh token isteği, header eklemeden devam et
+    }
+
+    // Diğer tüm istekler için access token ekle
     const token = localStorage.getItem('accessToken');
     if (token) {
       config.headers['Authorization'] = `Bearer ${token}`;
@@ -61,5 +67,6 @@ axios.interceptors.request.use(
     return Promise.reject(error);
   }
 );
+
 
 export default axios;

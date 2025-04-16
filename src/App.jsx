@@ -13,6 +13,8 @@ import FilterTable from './components/FilterTable';
 import TypeTable from './components/TypeTable';
 import AddPhysicalServer from './components/AddPhysicalServer';
 import SnapshotTable from './components/SnapshotTable';
+import DeletedTable from './components/DeletedTable';
+import PhysicalTable from './components/PhysicalTable';
 
 import { Container, Typography, Box } from '@mui/material';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
@@ -50,7 +52,8 @@ function App() {
             element={
               <>
                 <AppLayout> 
-                      <DataTable />
+                      <FilterTable />
+                      <PhysicalTable />
                 </AppLayout>
               </>
             }
@@ -66,21 +69,21 @@ function App() {
             }
           />
           <Route
-            path="/servers/type/:type"
+            path="/servers/virtual/:os"
             element={
               <>
                 <AppLayout> 
-                      <TypeTable />
+                      <FilterTable />
                 </AppLayout>
               </>
             }
           />
           <Route
-            path="/servers/:type/:os"
+            path="/servers/physical/:os"
             element={
               <>
                 <AppLayout> 
-                      <FilterTable />
+                      <PhysicalTable />
                 </AppLayout>
               </>
             }
@@ -126,6 +129,14 @@ function App() {
             element={
               <AppLayout> 
                 <SnapshotTable />
+              </AppLayout>
+            }
+          />
+          <Route
+            path="/vcenter/deleted"
+            element={
+              <AppLayout> 
+                <DeletedTable />
               </AppLayout>
             }
           />

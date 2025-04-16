@@ -95,7 +95,7 @@ const SnapshotTable = () => {
     setServers(newData);
   };
 
-  let columns = Object.keys(snapshots[0] || {}).map((key) => ({
+  let columns = Object.keys(snapshots[0] || {}).filter(key => key.toUpperCase() !== "VM_ID").map((key) => ({
     title: key.replace(/_/g, ' '),
     dataIndex: key,
     key: key,
@@ -106,6 +106,7 @@ const SnapshotTable = () => {
       return String(a[key] || '').localeCompare(String(b[key] || ''));
     },
     render: (text, record) => {
+      if (key.toUpperCase() === "VM_ID") {}
       // Eğer tarihse, okunabilir formata çevir
       if (key.toLowerCase().includes("date") && typeof text === "number") {
         return new Date(text).toLocaleString(); // Kullanıcının yerel tarih formatına çevir
