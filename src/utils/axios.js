@@ -16,7 +16,7 @@ axios.interceptors.response.use(
           throw new Error('No refresh token');
         }
 
-        axios.defaults.headers.common['Authorization'] = 'Token z8vpx5l3fqkwn7m1dj9trsahguy42bo6ceqxtkih';
+        //axios.defaults.headers.common['Authorization'] = 'Token z8vpx5l3fqkwn7m1dj9trsahguy42bo6ceqxtkih';
         // Refresh token ile yeni access token al
         const response = await axios.post('http://localhost:8000/api/token/refresh/', {
           refresh: refreshToken
@@ -52,7 +52,7 @@ axios.interceptors.response.use(
 axios.interceptors.request.use(
   (config) => {
     // Refresh token isteği yapılıyorsa, Authorization header'ı eklememek için kontrol et
-    if (config.url && config.url.includes('/api/token/refresh/')) {
+    if (config.url && (config.url.includes('/api/token/refresh/') || config.url.includes('/api/login/'))) {
       return config; // Refresh token isteği, header eklemeden devam et
     }
 

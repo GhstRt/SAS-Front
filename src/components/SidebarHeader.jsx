@@ -15,7 +15,8 @@ import {
   KeyOutlined,
   GlobalOutlined,
   AppstoreAddOutlined,
-  DeleteOutlined
+  DeleteOutlined,
+  DatabaseOutlined
 } from "@ant-design/icons";
 import { Table, Typography, Tag } from "antd";
 import logo from '../assets/logo.png';
@@ -56,6 +57,13 @@ const menuItems = [
           { key: "1-2-3", label: "Mac", icon: <AppleOutlined /> },
           
         ],
+      },
+      {
+        key: "1-3",
+        label: "Esxi Hosts",
+        children: [
+          {key: "1-3-1", label: "Esxi List", icon: <DatabaseOutlined />}
+        ]
       },
     ],
   },
@@ -139,6 +147,12 @@ const menuItems = [
         break;
       case "1-2-4":
         navigate("/servers/physical/add");
+        break;
+      case "1-3":
+        navigate("/servers/esxi");
+        break;
+      case "1-3-1":
+        navigate("/servers/esxi");
         break;
       case "2-1":
         navigate("/credentials");

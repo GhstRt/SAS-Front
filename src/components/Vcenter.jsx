@@ -48,7 +48,7 @@ const VCenterPage = () => {
 
   const deleteVCenter = async (id) => {
     try {
-      await axios.delete(`http://localhost:8000/api/delete-vcenter/${id}`);
+      await axios.delete(`http://localhost:8000/api/delete-vcenter/${id}/`);
       fetchVCenters();
     } catch (error) {
       console.error("Error deleting vcenter:", error);

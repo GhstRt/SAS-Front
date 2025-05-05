@@ -15,6 +15,7 @@ import AddPhysicalServer from './components/AddPhysicalServer';
 import SnapshotTable from './components/SnapshotTable';
 import DeletedTable from './components/DeletedTable';
 import PhysicalTable from './components/PhysicalTable';
+import EsxiTable from './components/EsxiTable';
 
 import { Container, Typography, Box } from '@mui/material';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
@@ -137,6 +138,14 @@ function App() {
             element={
               <AppLayout> 
                 <DeletedTable />
+              </AppLayout>
+            }
+          />
+          <Route
+            path="/servers/esxi"
+            element={
+              <AppLayout> 
+                <EsxiTable />
               </AppLayout>
             }
           />

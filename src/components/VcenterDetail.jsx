@@ -47,7 +47,7 @@ const VcenterDetail = () => {
 
   const handleExploreClusterForEsxi = async (record) => {
     try {
-      const response = await axios.post(`http://localhost:8000/api/explore-cls-for-esxi/${vcenterData.id}/${record.cl_id}/`, { record });
+      const response = await axios.get(`http://localhost:8000/api/explore-esxi-from-cluster/${vcenterData.id}/${record.cl_id}/`, { record });
       console.log("Explore response:", response.data);
     } catch (error) {
       console.error("Error exploring:", error);

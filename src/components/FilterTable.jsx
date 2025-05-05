@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Table, Button, Input, Modal, Checkbox, Space } from "antd";
 import { useNavigate } from "react-router-dom";
-import { EyeOutlined, InfoCircleOutlined, FilterOutlined, SearchOutlined } from "@ant-design/icons";
+import { EyeOutlined, InfoCircleOutlined, FilterOutlined, SearchOutlined, ReloadOutlined } from "@ant-design/icons";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 
@@ -124,6 +124,20 @@ const FilterTable = () => {
     setEditingKey(null);
   };
 
+  const handleReload = async (key) => {
+    try {
+      const response = await axios.get(`http://127.0.0.1:8000/api/reload-server/${key}/`, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      console.log("Başarılı:", response.data);
+    } catch (error) {
+      console.error("Başarısız:", error.response ? error.response.data : error.message);
+    }
+  };
+
   const handleDelete = async (key) => {
     setServers(servers.filter(item => item.key !== key));
     try {
@@ -153,30 +167,33 @@ const FilterTable = () => {
     navigate(`/details/${key}`);
   };
 
-  let columns = Object.keys(servers[0] || {}).map((key) => ({
-    title: key.replace(/_/g, ' '),
-    dataIndex: key,
-    key: key,
-    sorter: (a, b) => {
-      if (typeof a[key] === 'number' && typeof b[key] === 'number') {
-        return a[key] - b[key];
-      }
-      return String(a[key] || '').localeCompare(String(b[key] || ''));
-    },
-    render: (text, record) => {
-      // Eğer tarihse, okunabilir formata çevir
-      if (key.toLowerCase().includes("date") && typeof text === "number") {
-        return new Date(text).toLocaleString(); // Kullanıcının yerel tarih formatına çevir
-      }
-      return editingKey === record.key ? (
-        <Input value={text} onChange={(e) => handleChange(record.key, key, e.target.value)} />
-      ) : (
-        text
-      );
-    },
-    ...getColumnSearchProps(key), // **Arama filtresi eklendi**
-  }
-  ));
+  const excludedKeys = ["VM_MO_ID", "VCENTER_URL", "VCENTER_ID", "RESOURCE_TYPE", "key", "CONSOLE_IP"]; // tabloya eklenmeyecek alanlar
+
+  let columns = Object.keys(servers[0] || {})
+    .filter((key) => !excludedKeys.includes(key))  // Bu satır eklendi
+    .map((key) => ({
+      title: key.replace(/_/g, ' '),
+      dataIndex: key,
+      key: key,
+      sorter: (a, b) => {
+        if (typeof a[key] === 'number' && typeof b[key] === 'number') {
+          return a[key] - b[key];
+        }
+        return String(a[key] || '').localeCompare(String(b[key] || ''));
+      },
+      render: (text, record) => {
+        if (key.toLowerCase().includes("date") && typeof text === "number") {
+          return new Date(text).toLocaleString();
+        }
+        return editingKey === record.key ? (
+          <Input value={text} onChange={(e) => handleChange(record.key, key, e.target.value)} />
+        ) : (
+          text
+        );
+      },
+      ...getColumnSearchProps(key),
+    }));
+
 
   columns = columns.sort((a, b) => (a.key === "AIM_OF_USE" ? -1 : b.key === "AIM_OF_USE" ? 1 : 0));
 
@@ -199,6 +216,12 @@ const FilterTable = () => {
             Düzenle
           </Button>
         )}
+        <Button type="default" onClick={() => window.open(record.VCENTER_URL, "_blank")}>
+          vCenter
+        </Button>
+        <Button type="default" onClick={() => handleReload(record.key)}>
+          <ReloadOutlined />
+        </Button>
         <Button type="default" onClick={() => handleNavigate(record.key)}>
           Detay
         </Button>
