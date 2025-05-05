@@ -18,7 +18,7 @@ const VCenterPage = () => {
 
   const fetchVCenters = async () => {
     try {
-      const response = await axios.get("http://localhost:8000/api/get-vcenters/");
+      const response = await axios.get("https://cloudsamapi.fw.dteknoloji.com.tr/api/get-vcenters/");
       setVcenters(Array.isArray(response.data.data) ? response.data.data : []);
     } catch (error) {
       console.error("Error fetching vcenters:", error);
@@ -28,7 +28,7 @@ const VCenterPage = () => {
 
   const fetchCredentials = async () => {
     try {
-      const response = await axios.get("http://localhost:8000/api/get-credentials/");
+      const response = await axios.get("https://cloudsamapi.fw.dteknoloji.com.tr/api/get-credentials/");
       setCredentials(Array.isArray(response.data.data) ? response.data.data : []);
     } catch (error) {
       console.error("Error fetching credentials:", error);
@@ -38,7 +38,7 @@ const VCenterPage = () => {
 
   const addVCenter = async () => {
     try {
-      await axios.post("http://localhost:8000/api/add-vcenter/", newVCenter);
+      await axios.post("https://cloudsamapi.fw.dteknoloji.com.tr/api/add-vcenter/", newVCenter);
       fetchVCenters();
       setIsModalOpen(false);
     } catch (error) {
@@ -48,7 +48,7 @@ const VCenterPage = () => {
 
   const deleteVCenter = async (id) => {
     try {
-      await axios.delete(`http://localhost:8000/api/delete-vcenter/${id}/`);
+      await axios.delete(`https://cloudsamapi.fw.dteknoloji.com.tr/api/delete-vcenter/${id}/`);
       fetchVCenters();
     } catch (error) {
       console.error("Error deleting vcenter:", error);
@@ -57,7 +57,7 @@ const VCenterPage = () => {
 
   const editVCenter = async () => {
     try {
-      await axios.put(`http://localhost:8000/api/edit-vcenter/${editingVCenter.id}`, editingVCenter);
+      await axios.put(`https://cloudsamapi.fw.dteknoloji.com.tr/api/edit-vcenter/${editingVCenter.id}`, editingVCenter);
       fetchVCenters();
       setEditingVCenter(null);
       setIsEditModalOpen(false);
@@ -68,7 +68,7 @@ const VCenterPage = () => {
 
   const discoveryVCenter = async (id) => {
     try {
-      await axios.get(`http://localhost:8000/api/discovery-vcenter/${id}/`);
+      await axios.get(`https://cloudsamapi.fw.dteknoloji.com.tr/api/discovery-vcenter/${id}/`);
       fetchVCenters();
     } catch (error) {
       console.error("Error editing vcenter:", error);
@@ -77,7 +77,7 @@ const VCenterPage = () => {
 
   const discoverySnapshots = async (id) => {
     try {
-      await axios.get(`http://localhost:8000/api/explore-snapshot-from-vcenter/${id}/`);
+      await axios.get(`https://cloudsamapi.fw.dteknoloji.com.tr/api/explore-snapshot-from-vcenter/${id}/`);
       fetchVCenters();
     } catch (error) {
       console.error("Error editing vcenter:", error);

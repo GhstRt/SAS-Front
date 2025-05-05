@@ -15,7 +15,7 @@ const CredentialsPage = () => {
 
   const fetchCredentials = async () => {
     try {
-      const response = await axios.get("http://localhost:8000/api/get-credentials/");
+      const response = await axios.get("https://cloudsamapi.fw.dteknoloji.com.tr/api/get-credentials/");
       setCredentials(Array.isArray(response.data.data) ? response.data.data : []);
     } catch (error) {
       console.error("Error fetching credentials:", error);
@@ -25,7 +25,7 @@ const CredentialsPage = () => {
 
   const addCredential = async () => {
     try {
-      await axios.post("http://localhost:8000/api/add-credential/", newCredential);
+      await axios.post("https://cloudsamapi.fw.dteknoloji.com.tr/api/add-credential/", newCredential);
       fetchCredentials();
       setIsModalOpen(false);
     } catch (error) {
@@ -35,7 +35,7 @@ const CredentialsPage = () => {
 
   const deleteCredential = async (id) => {
     try {
-      await axios.delete(`http://localhost:8000/api/delete-credentials/${id}`);
+      await axios.delete(`https://cloudsamapi.fw.dteknoloji.com.tr/api/delete-credentials/${id}`);
       fetchCredentials();
     } catch (error) {
       console.error("Error deleting credential:", error);
@@ -44,7 +44,7 @@ const CredentialsPage = () => {
 
   const editCredential = async () => {
     try {
-      await axios.put(`http://localhost:8000/api/edit-credentials/${editingCredential.id}`, editingCredential);
+      await axios.put(`https://cloudsamapi.fw.dteknoloji.com.tr/api/edit-credentials/${editingCredential.id}`, editingCredential);
       fetchCredentials();
       setEditingCredential(null);
     } catch (error) {

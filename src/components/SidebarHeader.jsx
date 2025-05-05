@@ -105,7 +105,7 @@ const menuItems = [
   useEffect(() => {
     const fetchJobs = async () => {
       try {
-        const response = await axios.get("http://localhost:8000/api/get-jobs/");
+        const response = await axios.get("https://cloudsamapi.fw.dteknoloji.com.tr/api/get-jobs/");
         setJobs(Array.isArray(response.data.data) ? response.data.data : []);
       } catch (error) {
         console.error("Error fetching jobs:", error);

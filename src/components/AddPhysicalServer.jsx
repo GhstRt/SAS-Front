@@ -36,7 +36,7 @@ const AddPhysicalServer = () => {
         description: values.description,
       };
 
-      const response = await axios.post("http://localhost:8000/api/create-server/", payload);
+      const response = await axios.post("https://cloudsamapi.fw.dteknoloji.com.tr/api/create-server/", payload);
 
       if (response.status === 201) {
         message.success("Sunucu başarıyla eklendi!");

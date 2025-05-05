@@ -20,7 +20,7 @@ const DeletedTable = () => {
 
     const fetchServers = async () => {
         try {
-            const response = await axios.get(`http://127.0.0.1:8000/api/get-deleted-servers/`);
+            const response = await axios.get(`https://cloudsamapi.fw.dteknoloji.com.tr/api/get-deleted-servers/`);
             if (response.data.status.code === 0) {
                 const formattedData = response.data.data.map((item) => ({
                     key: item.id,

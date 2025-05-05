@@ -25,10 +25,10 @@ const PhysicalTable = () => {
         try {
             let response = "";
             if (os === undefined) {
-                response = await axios.get(`http://127.0.0.1:8000/api/get-servers-by-filter/physical/all/`);
+                response = await axios.get(`https://cloudsamapi.fw.dteknoloji.com.tr/api/get-servers-by-filter/physical/all/`);
             }
             else {
-                response = await axios.get(`http://127.0.0.1:8000/api/get-servers-by-filter/physical/${os}/`);
+                response = await axios.get(`https://cloudsamapi.fw.dteknoloji.com.tr/api/get-servers-by-filter/physical/${os}/`);
             }
 
             if (response.data.status.code === 0) {
@@ -133,7 +133,7 @@ const PhysicalTable = () => {
                 // Diğer güncellenmesi gereken alanlar
             };
 
-            const response = await axios.patch(`http://127.0.0.1:8000/api/update-server/${record.key}/`, updatedData, {
+            const response = await axios.patch(`https://cloudsamapi.fw.dteknoloji.com.tr/api/update-server/${record.key}/`, updatedData, {
                 headers: {
                     'Content-Type': 'application/json',
                 },

@@ -27,10 +27,10 @@ const FilterTable = () => {
     try {
       let response = "";
       if (os === undefined) {
-        response = await axios.get(`http://127.0.0.1:8000/api/get-servers-by-filter/virtual/all/`);
+        response = await axios.get(`https://cloudsamapi.fw.dteknoloji.com.tr/api/get-servers-by-filter/virtual/all/`);
       }
       else {
-        response = await axios.get(`http://127.0.0.1:8000/api/get-servers-by-filter/virtual/${os}/`);
+        response = await axios.get(`https://cloudsamapi.fw.dteknoloji.com.tr/api/get-servers-by-filter/virtual/${os}/`);
       }
       if (response.data.status.code === 0) {
         const formattedData = response.data.data.map((item) => ({
@@ -128,7 +128,7 @@ const FilterTable = () => {
         // Diğer güncellenmesi gereken alanlar
       };
 
-      const response = await axios.put(`http://127.0.0.1:8000/api/update-server/${record.key}/`, updatedData, {
+      const response = await axios.put(`https://cloudsamapi.fw.dteknoloji.com.tr/api/update-server/${record.key}/`, updatedData, {
         headers: {
           'Content-Type': 'application/json',
         },
@@ -143,7 +143,7 @@ const FilterTable = () => {
 
   const handleReload = async (key) => {
     try {
-      const response = await axios.get(`http://127.0.0.1:8000/api/reload-server/${key}/`, {
+      const response = await axios.get(`https://cloudsamapi.fw.dteknoloji.com.tr/api/reload-server/${key}/`, {
         headers: {
           'Content-Type': 'application/json',
         },
@@ -158,7 +158,7 @@ const FilterTable = () => {
   const handleDelete = async (key) => {
     setServers(servers.filter(item => item.key !== key));
     try {
-      const response = await axios.delete(`http://127.0.0.1:8000/api/delete-server/${key}/`, {
+      const response = await axios.delete(`https://cloudsamapi.fw.dteknoloji.com.tr/api/delete-server/${key}/`, {
         headers: {
           'Content-Type': 'application/json',
         },

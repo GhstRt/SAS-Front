@@ -21,7 +21,7 @@ const EsxiTable = () => {
 
     const fetchServers = async () => {
         try {
-            const response = await axios.get(`http://127.0.0.1:8000/api/get-esxi/`);
+            const response = await axios.get(`https://cloudsamapi.fw.dteknoloji.com.tr/api/get-esxi/`);
             console.log(response.data.data.data);
             if (response.data.status.code === 0) {
                 const formattedData = response.data.data.map((item) => ({

@@ -7,7 +7,7 @@ axios.interceptors.response.use(
     const originalRequest = error.config;
 
 
-    if(originalRequest.url === "http://localhost:8000/api/token/refresh/") {
+    if(originalRequest.url === "https://cloudsamapi.fw.dteknoloji.com.tr/api/token/refresh/") {
       localStorage.clear();
       window.location.href = '/login';
     }
@@ -24,7 +24,7 @@ axios.interceptors.response.use(
 
         //axios.defaults.headers.common['Authorization'] = 'Token z8vpx5l3fqkwn7m1dj9trsahguy42bo6ceqxtkih';
         // Refresh token ile yeni access token al
-        const response = await axios.post('http://localhost:8000/api/token/refresh/', {
+        const response = await axios.post('https://cloudsamapi.fw.dteknoloji.com.tr/api/token/refresh/', {
           refresh: refreshToken
         },
           {
