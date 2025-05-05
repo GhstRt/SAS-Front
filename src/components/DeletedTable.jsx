@@ -2,7 +2,6 @@ import React, { useState, useEffect, useRef } from "react";
 import { Table, Button, Input, Modal, Checkbox, Space } from "antd";
 import { EyeOutlined, InfoCircleOutlined, FilterOutlined, SearchOutlined } from "@ant-design/icons";
 import axios from "axios";
-import ServerChart from "./Chart";
 
 const DeletedTable = () => {
     const [servers, setServers] = useState([]);

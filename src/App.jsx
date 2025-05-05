@@ -4,7 +4,6 @@ import Register from './components/auth/Register';
 import ForgotPassword from './components/auth/ForgotPassword';
 import ResetPassword from './components/auth/ResetPassword';
 import AppLayout from './components/SidebarHeader';
-import Edit from './components/auth/Edit';
 import CredentialsPage from './components/Credentials';
 import VCenterPage from './components/Vcenter';
 import FilterTable from './components/FilterTable';
@@ -144,7 +143,6 @@ function App() {
             }
           />
 
-          <Route path="/edit" element={<Edit />} />
 
 
         </Routes>
