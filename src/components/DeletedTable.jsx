@@ -2,6 +2,8 @@ import React, { useState, useEffect, useRef } from "react";
 import { Table, Button, Input, Modal, Checkbox, Space } from "antd";
 import { EyeOutlined, InfoCircleOutlined, FilterOutlined, SearchOutlined } from "@ant-design/icons";
 import axios from "axios";
+import * as XLSX from 'xlsx';
+import { saveAs } from 'file-saver';
 
 const DeletedTable = () => {
     const [servers, setServers] = useState([]);
@@ -38,6 +40,19 @@ const DeletedTable = () => {
         confirm();
         setSearchText(selectedKeys[0]);
         setSearchedColumn(dataIndex);
+    };
+
+    const exportToExcel = () => {
+        const dataToExport = filteredData.length > 0 ? filteredData : servers;
+        const cleanedData = dataToExport.map(({ key, ...item }) => item); // key'i çıkar
+
+        const worksheet = XLSX.utils.json_to_sheet(cleanedData);
+        const workbook = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(workbook, worksheet, "Sunucular");
+
+        const excelBuffer = XLSX.write(workbook, { bookType: "xlsx", type: "array" });
+        const blob = new Blob([excelBuffer], { type: "application/octet-stream" });
+        saveAs(blob, "silinenler_listesi.xlsx");
     };
 
     const handleReset = (clearFilters) => {
@@ -162,6 +177,11 @@ const DeletedTable = () => {
     return (
         <div style={{ display: "flex", justifyContent: "center", alignItems: "center", minHeight: "20vh", width: "100%" }}>
             <div style={{ maxWidth: "95%", width: "100vw", background: "#fff", padding: "20px", borderRadius: "8px", boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)" }}>
+                <div style={{ marginBottom: 16, textAlign: "right" }}>
+                    <Button type="primary" onClick={exportToExcel}>
+                        Excel'e Aktar
+                    </Button>
+                </div>
                 <Table
                     columns={columns}
                     dataSource={servers}

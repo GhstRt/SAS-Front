@@ -4,6 +4,8 @@ import { useNavigate } from "react-router-dom";
 import { EyeOutlined, InfoCircleOutlined, FilterOutlined, SearchOutlined } from "@ant-design/icons";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+import * as XLSX from 'xlsx';
+import { saveAs } from 'file-saver';
 
 const PhysicalTable = () => {
     const { type, os } = useParams(); // URL'den parametreleri al
@@ -13,6 +15,7 @@ const PhysicalTable = () => {
     const [searchText, setSearchText] = useState('');
     const [searchedColumn, setSearchedColumn] = useState('');
     const searchInput = useRef(null);
+    const [filteredData, setFilteredData] = useState([]);
 
     useEffect(() => {
         fetchServers();
@@ -41,6 +44,19 @@ const PhysicalTable = () => {
             setLoading(false);
         }
     };
+
+    const exportToExcel = () => {
+        const dataToExport = filteredData.length > 0 ? filteredData : servers;
+        const cleanedData = dataToExport.map(({ key, ...item }) => item); // key'i çıkar
+      
+        const worksheet = XLSX.utils.json_to_sheet(cleanedData);
+        const workbook = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(workbook, worksheet, "Sunucular");
+      
+        const excelBuffer = XLSX.write(workbook, { bookType: "xlsx", type: "array" });
+        const blob = new Blob([excelBuffer], { type: "application/octet-stream" });
+        saveAs(blob, "fiziksel_sunucu_listesi.xlsx");
+      };
 
     const handleSearch = (selectedKeys, confirm, dataIndex) => {
         confirm();
@@ -194,11 +210,19 @@ const PhysicalTable = () => {
     return (
         <div style={{ display: "flex", justifyContent: "center", alignItems: "center", minHeight: "20vh", width: "100%" }}>
             <div style={{ maxWidth: "95%", width: "100vw", background: "#fff", padding: "20px", borderRadius: "8px", boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)" }}>
+                <div style={{ marginBottom: 16, textAlign: "right" }}>
+                    <Button type="primary" onClick={exportToExcel}>
+                        Excel'e Aktar
+                    </Button>
+                </div>
                 <Table
                     columns={columns}
                     dataSource={servers}
                     loading={loading}
                     size="small"
+                    onChange={(pagination, filters, sorter, extra) => {
+                        setFilteredData(extra.currentDataSource); // filtrelenmiş ve sıralanmış veri
+                      }}
                     pagination={{
                         showSizeChanger: true,
                         pageSizeOptions: ["5", "10", "20", "50"],
