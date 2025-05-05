@@ -163,10 +163,6 @@ const FilterTable = () => {
     setServers(newData);
   };
 
-  const handleNavigate = (key) => {
-    navigate(`/details/${key}`);
-  };
-
   const excludedKeys = ["VM_MO_ID", "VCENTER_URL", "VCENTER_ID", "RESOURCE_TYPE", "key", "CONSOLE_IP"]; // tabloya eklenmeyecek alanlar
 
   let columns = Object.keys(servers[0] || {})
@@ -221,9 +217,6 @@ const FilterTable = () => {
         </Button>
         <Button type="default" onClick={() => handleReload(record.key)}>
           <ReloadOutlined />
-        </Button>
-        <Button type="default" onClick={() => handleNavigate(record.key)}>
-          Detay
         </Button>
         {editingKey === record.key && (
           <Button type="danger" onClick={() => handleDelete(record.key)}>

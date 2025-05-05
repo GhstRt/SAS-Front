@@ -103,7 +103,9 @@ const DeletedTable = () => {
         setServers(newData);
     };
 
-    let columns = Object.keys(servers[0] || {}).map((key) => ({
+    const excludedKeys = ["VM_MO_ID", "VCENTER_URL", "VCENTER_ID", "RESOURCE_TYPE", "key", "CONSOLE_IP"]; // tabloya eklenmeyecek alanlar
+
+    let columns = Object.keys(servers[0] || {}).filter((key) => !excludedKeys.includes(key)).map((key) => ({
         title: key.replace(/_/g, ' '),
         dataIndex: key,
         key: key,

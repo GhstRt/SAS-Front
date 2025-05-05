@@ -6,8 +6,14 @@ axios.interceptors.response.use(
   async (error) => {
     const originalRequest = error.config;
 
+
+    if(originalRequest.url === "http://localhost:8000/api/token/refresh/") {
+      localStorage.clear();
+      window.location.href = '/login';
+    }
+
     // Token expire olduysa ve bu istek zaten refresh denemesi değilse
-    if (error.response?.status === 401 && !originalRequest._retry) {
+    else if (error.response?.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true;
 
       try {
@@ -21,20 +27,19 @@ axios.interceptors.response.use(
         const response = await axios.post('http://localhost:8000/api/token/refresh/', {
           refresh: refreshToken
         },
-        {
-          headers: {
-            'Content-Type': 'application/json',  // JSON formatında veri gönderiyoruz
-            'Authorization': 'Token z8vpx5l3fqkwn7m1dj9trsahguy42bo6ceqxtkih'
-          }
-        });
-
+          {
+            headers: {
+              'Content-Type': 'application/json',  // JSON formatında veri gönderiyoruz
+              'Authorization': 'Token z8vpx5l3fqkwn7m1dj9trsahguy42bo6ceqxtkih'
+            }
+          });
         // Yeni token'ı kaydet
         localStorage.setItem('accessToken', response.data.access);
-        
+
         // Orijinal isteği yeni token ile tekrarla
         axios.defaults.headers.common['Authorization'] = `Bearer ${response.data.access}`;
         originalRequest.headers['Authorization'] = `Bearer ${response.data.access}`;
-        
+
         return axios(originalRequest);
       } catch (refreshError) {
         // Refresh token da geçersizse kullanıcıyı logout yap
@@ -43,7 +48,6 @@ axios.interceptors.response.use(
         return Promise.reject(refreshError);
       }
     }
-
     return Promise.reject(error);
   }
 );

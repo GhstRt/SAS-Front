@@ -3,14 +3,11 @@ import Login from './components/auth/Login';
 import Register from './components/auth/Register';
 import ForgotPassword from './components/auth/ForgotPassword';
 import ResetPassword from './components/auth/ResetPassword';
-import PrivateRoute from './components/auth/PrivateRoute';
-import DataTable from './components/Table';
 import AppLayout from './components/SidebarHeader';
 import Edit from './components/auth/Edit';
 import CredentialsPage from './components/Credentials';
 import VCenterPage from './components/Vcenter';
 import FilterTable from './components/FilterTable';
-import TypeTable from './components/TypeTable';
 import AddPhysicalServer from './components/AddPhysicalServer';
 import SnapshotTable from './components/SnapshotTable';
 import DeletedTable from './components/DeletedTable';
@@ -44,17 +41,13 @@ function App() {
       <Router>
         <Routes>
           <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/forgot-password" element={<ForgotPassword />} />
-          <Route path="/reset-password/:token" element={<ResetPassword />} />
-          <Route path="/table" element={<DataTable />} />
           <Route
             path="/servers"
             element={
               <>
-                <AppLayout> 
-                      <FilterTable />
-                      <PhysicalTable />
+                <AppLayout>
+                  <FilterTable />
+                  <PhysicalTable />
                 </AppLayout>
               </>
             }
@@ -63,8 +56,9 @@ function App() {
             path="/"
             element={
               <>
-                <AppLayout> 
-                      <DataTable />
+                <AppLayout>
+                  <FilterTable />
+                  <PhysicalTable />
                 </AppLayout>
               </>
             }
@@ -73,8 +67,8 @@ function App() {
             path="/servers/virtual/:os"
             element={
               <>
-                <AppLayout> 
-                      <FilterTable />
+                <AppLayout>
+                  <FilterTable />
                 </AppLayout>
               </>
             }
@@ -83,8 +77,8 @@ function App() {
             path="/servers/physical/:os"
             element={
               <>
-                <AppLayout> 
-                      <PhysicalTable />
+                <AppLayout>
+                  <PhysicalTable />
                 </AppLayout>
               </>
             }
@@ -93,8 +87,8 @@ function App() {
             path="/credentials"
             element={
               <>
-                <AppLayout> 
-                      <CredentialsPage />
+                <AppLayout>
+                  <CredentialsPage />
                 </AppLayout>
               </>
             }
@@ -103,8 +97,8 @@ function App() {
             path="/vcenters"
             element={
               <>
-                <AppLayout> 
-                      <VCenterPage />
+                <AppLayout>
+                  <VCenterPage />
                 </AppLayout>
               </>
             }
@@ -112,7 +106,7 @@ function App() {
           <Route
             path="/vcenter/:uuid"
             element={
-              <AppLayout> 
+              <AppLayout>
                 <VcenterDetail />
               </AppLayout>
             }
@@ -120,7 +114,7 @@ function App() {
           <Route
             path="/servers/physical/add"
             element={
-              <AppLayout> 
+              <AppLayout>
                 <AddPhysicalServer />
               </AppLayout>
             }
@@ -128,7 +122,7 @@ function App() {
           <Route
             path="/vcenter/snapshots"
             element={
-              <AppLayout> 
+              <AppLayout>
                 <SnapshotTable />
               </AppLayout>
             }
@@ -136,7 +130,7 @@ function App() {
           <Route
             path="/vcenter/deleted"
             element={
-              <AppLayout> 
+              <AppLayout>
                 <DeletedTable />
               </AppLayout>
             }
@@ -144,13 +138,13 @@ function App() {
           <Route
             path="/servers/esxi"
             element={
-              <AppLayout> 
+              <AppLayout>
                 <EsxiTable />
               </AppLayout>
             }
           />
 
-            <Route path="/edit" element={<Edit />} />
+          <Route path="/edit" element={<Edit />} />
 
 
         </Routes>

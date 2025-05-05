@@ -88,11 +88,12 @@ const menuItems = [
 
   const handleLogout = () => {
     console.log("Çıkış yapıldı");
+    localStorage.clear();
+    window.location.href = '/login';
   };
 
   const profileMenu = (
     <Menu>
-      <Menu.Item key="1" icon={<UserOutlined />}>Profil</Menu.Item>
       <Menu.Item key="2" icon={<LogoutOutlined />} onClick={handleLogout}>
         Çıkış Yap
       </Menu.Item>

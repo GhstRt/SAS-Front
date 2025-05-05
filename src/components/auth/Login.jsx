@@ -128,38 +128,6 @@ const Login = () => {
               Giriş Yap
             </Button>
           </form>
-
-          <Box sx={{ mt: 2, width: '100%', textAlign: 'center' }}>
-            <Link 
-              href="/forgot-password" 
-              variant="body1"
-              sx={{ 
-                textDecoration: 'none',
-                '&:hover': {
-                  textDecoration: 'underline'
-                }
-              }}
-            >
-              Şifremi Unuttum
-            </Link>
-          </Box>
-          <Box sx={{ mt: 2, width: '100%', textAlign: 'center' }}>
-            <Typography variant="body1">
-              Hesabınız yok mu?{' '}
-              <Link 
-                href="/register"
-                sx={{ 
-                  textDecoration: 'none',
-                  fontWeight: 'bold',
-                  '&:hover': {
-                    textDecoration: 'underline'
-                  }
-                }}
-              >
-                Kayıt Ol
-              </Link>
-            </Typography>
-          </Box>
         </Paper>
       </Container>
     </Box>
